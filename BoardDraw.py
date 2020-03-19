@@ -1,12 +1,25 @@
 import curses
+from dataclasses import dataclass
 from math import floor
+import player
 
-place_table = (((7,1),(7,5)), ((5,1),(5,5))
-            ((3,1),(3,5)), ((1,1),(1,5))
+place_table = (((7,1),(7,5)), ((5,1),(5,5)),
+            ((3,1),(3,5)), ((1,1),(1,5)),
             (1,3), (3,3), (5,3), (7,3),
             (9,3), (11,3), (13,3), (15,3),
             ((15,1),(15,5)), ((13,1),(13,5)))
 
+'''
+List containing tuples
+tuples must follow following format: (board position, Player Color/Indicator, side if on single-person side (default to False))
+'''
+@dataclass
+class stoneMove:
+    pos: int
+    owner: chr
+    side: int = -1
+
+moveList = [stoneMove(2, '1', 0)] 
 
 def drawBoard(stdscr):
     curses.noecho()
