@@ -12,15 +12,15 @@ def drawBoard(stdscr):
     height, width = stdscr.getmaxyx()
     dbf.write(f"H: {height} W: {width}\n")
 
-    xscale = floor(width/16 - 1)
-    yscale = floor(height/2 - 2)
+    xscale = floor((width-1) / 16)
+    yscale = floor((height-1) / 6)
     dbf.write(f"XSCL {xscale} YSCL {yscale}\n")
-    
-    if yscale*2 > xscale:
+   
+    if xscale > 2*yscale:
+        xscale = yscale * 2
+    else:
         xscale -= 1 if xscale % 2 == 1 else 0
         yscale = int(xscale/2)
-    elif xscale/2 > yscale:
-        xscale = int(yscale*2)
     dbf.write(f"POST XSCL {xscale} YSCL {yscale}\n")
 
     while True:
@@ -82,19 +82,18 @@ def drawBoard(stdscr):
         if chr(c) == 'q':
             break
         elif c == curses.KEY_RESIZE:
-            dbf.write("RESIZE WINDOW")
             height, width = stdscr.getmaxyx()
             dbf.write(f"H: {height} W: {width}\n")
 
-            xscale = floor(width/16 - 1)
-            yscale = floor(height/2 - 2)
+            xscale = floor((width-1) / 16)
+            yscale = floor((height-1) / 6)
             dbf.write(f"XSCL {xscale} YSCL {yscale}\n")
-            
-            if yscale*2 > xscale:
+   
+            if xscale > 2*yscale:
+                xscale = yscale * 2
+            else:
                 xscale -= 1 if xscale % 2 == 1 else 0
                 yscale = int(xscale/2)
-            elif xscale/2 > yscale:
-                xscale = int(yscale*2)
             dbf.write(f"POST XSCL {xscale} YSCL {yscale}\n")
 
 
