@@ -32,7 +32,7 @@ class Player:
 class Stone:
     def __init__(self, ID, player=None):
         self._player = player
-        self._id = f"{self._player._pid}::{ID}" # For recognition by the board
+        self._id = ID # For recognition by the board
         self._pos = -1 # Negative if not on board
         self._is_safe = False
         self._max_pos = 14 # Num movable tiles on board
