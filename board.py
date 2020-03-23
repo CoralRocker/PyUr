@@ -40,6 +40,8 @@ class Board:
         if ftm > 14:
             return ILLEGAL_MOVE
         if ftm == 14:
+            self._players[plyNum].move(chipNum, move)
+            self._board[crm][0 if plyNum == 0 or len(self._board[crm]) == 1 else 1] = None
             return WIN_MOVE
 
         if ftm > self._num_spaces:

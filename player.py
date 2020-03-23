@@ -5,7 +5,7 @@ class Player:
         self._computer = is_computer
         self._pid = ID
         self._num_stones = 7
-        self._num_wins = 0
+        self._wins = []
         self._stones = []
         for s in range(0, 7):
             self._stones.append(Stone(s, self))
@@ -19,6 +19,12 @@ class Player:
 
     def move(self, stone, move):
         ret = self._stones[stone].move(move)
+        if self._stones[stone]._win:
+            self._wins.append(self._stones[stone])
+            # self._stones[stone] = None
+
+    def hasWon(self):
+        return len(self._wins) == 7
 
     '''
     Roll the equivalent of four d4's. Return sum of 1s and 2s

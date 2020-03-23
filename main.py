@@ -7,6 +7,7 @@ p2 = player.Player(2, False)
 
 b = board.Board(p1, p2)
 while True:
+    breakout = False
     while True:
         b.printBoard()
         roll = p1.roll()
@@ -26,6 +27,10 @@ while True:
                 break
         else:
             break
+        breakout = p1.hasWon()
+
+    if breakout:
+        break
 
     while True:
         roll = p2.roll()
@@ -38,5 +43,7 @@ while True:
         if ret not in [1, 3]:
 
             break
-        
+        breakout = p2.hasWon()
 
+    if breakout:
+        break
