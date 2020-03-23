@@ -70,11 +70,18 @@ def drawBoard(stdscr):
     dbf.write(f"POST XSCL {xscale} YSCL {yscale}\n")
 
     cellSize = (2*xscale - 1, 2*yscale - 1)
+    
+    p = 0
+    selected = [0,0]
 
     while True:
         stdscr.erase()
         for y in range(0, (6*yscale) + 1):
             for x in range(0, (16*xscale) + 1):
+                duplet = place_table[selected[p]][p] if type(place_table[selected[p]][p]) is tuple else place_table[selected[p]]
+                if (xscale*(duplet[0]-1)) < x < (xscale*(duplet[0]+1)) and (yscale*(duplet[1]-1)) < y < (yscale*(duplet[1]+1)):
+                    stdscr.addch(int((height/2 - (6*yscale)/2) + y), int((width/2 - (16*xscale)/2) + x), ' ', curses.A_REVERSE)
+
                 if y == 0:
                     if x in [0, (12*xscale)]:
                         stdscr.addch(int((height/2 - (6*yscale)/2) + y), int((width/2 - (16*xscale)/2) + x), curses.ACS_ULCORNER)
@@ -167,6 +174,8 @@ def drawBoard(stdscr):
                                     else:
                                         stdscr.addch(int((height/2 - (6*yscale)/2) + y2), int((width/2 - (16*xscale)/2) + x2), stone.owner, curses.color_pair(stone.pid))
 
+        
+
 
         stdscr.refresh()
         c = stdscr.getch()
@@ -187,6 +196,12 @@ def drawBoard(stdscr):
                 yscale = int(xscale/2)
             dbf.write(f"POST XSCL {xscale} YSCL {yscale}\n")
             cellSize = (2*xscale - 1, 2*yscale - 1)
+        elif c == curses.KEY_UP:
+            selected[p] = selected[p]+1 if selected[p] != 13 else 0
+        elif c == curses.KEY_DOWN:
+            selected[p] = selected[p]-1 if selected[p] != 0 else 13
+
+
 
 if __name__ == "__main__":
     curses.wrapper(drawBoard)
