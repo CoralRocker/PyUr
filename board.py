@@ -37,6 +37,11 @@ class Board:
         '''
         Check if within board
         '''
+        if ftm > 14:
+            return ILLEGAL_MOVE
+        if ftm == 14:
+            return WIN_MOVE
+
         if ftm > self._num_spaces:
             return ILLEGAL_MOVE
 
@@ -105,16 +110,20 @@ class Board:
 
         for i in range(4, 12):
             tmp = 'X'  if i in self._star_pos else ' '
-            print(f"[{(p1_str if self._board[i][0]._player == self._players[0] else p2_str) if self._board[i][0] != None  else tmp }]", end='')
+            p1_s = cf.red(str(self._board[i][0]._id)) if self._board[i][0] != None else None
+            p2_s = cf.blue(str(self._board[i][0]._id)) if self._board[i][0] != None else None
+            print(f"[{(p1_s if self._board[i][0]._player == self._players[0] else p2_s) if self._board[i][0] != None  else tmp }]", end='')
         print("")
         
         for i in reversed(range(0,4)):
             tmp = 'X'  if i in self._star_pos else ' '
-            print(f"[{p2_str if self._board[i][1] != None else tmp }]", end='')
+            tmp2 = cf.blue(str(self._board[i][1]._id)) if self._board[i][1] != None else None
+            print(f"[{tmp2 if self._board[i][1] != None else tmp }]", end='')
         print("      ", end='') # Space
         for i in reversed(range(12,14)):
+            tmp2 = cf.blue(str(self._board[i][1]._id)) if self._board[i][1] != None else None
             tmp = 'X'  if i in self._star_pos else ' '
-            print(f"[{p2_str if self._board[i][1] != None else tmp }]", end='')
+            print(f"[{tmp2 if self._board[i][1] != None else tmp }]", end='')
         print("")
         print("P2 Chips: ", end='')
         p2_unplayed = list(filter(lambda x: x._pos == -1, self._players[1]._stones))

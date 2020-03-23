@@ -9,6 +9,25 @@ place_table = (((7,1),(7,5)), ((5,1),(5,5)),
             (9,3), (11,3), (13,3), (15,3),
             ((15,1),(15,5)), ((13,1),(13,5)))
 
+def str2Curses(inStr, bordersize=1, stdscr=False, height=False, width=False):
+    height, width = stdscr.getmaxyx() if stdscr != False else height, width
+    outBox = []
+    inBox = inStr.split('\n')
+    for s in inBox:
+        count = 0
+        tmpStr = ""
+        for c in s:
+            tmpStr += c
+            count  += 1
+            if count >= (width - 2*bordersize - 1):
+                outBox.append(tmpStr)
+                tmpStr = ""
+                count = 0
+        outBox.append(tmpStr)
+    return outBox
+
+            
+
 '''
 List containing tuples
 tuples must follow following format: (board position, Player Color/Indicator, side if on single-person side (default to False))
@@ -169,4 +188,5 @@ def drawBoard(stdscr):
             dbf.write(f"POST XSCL {xscale} YSCL {yscale}\n")
             cellSize = (2*xscale - 1, 2*yscale - 1)
 
-curses.wrapper(drawBoard)
+if __name__ == "__main__":
+    curses.wrapper(drawBoard)
